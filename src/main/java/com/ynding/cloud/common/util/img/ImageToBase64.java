@@ -1,4 +1,4 @@
-package com.ynding.cloud.common.util;
+package com.ynding.cloud.common.util.img;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -9,13 +9,16 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Base64;
 
+/**
+ * @author ynding
+ */
 public class ImageToBase64 {
     /**
      * 将网络图片转换成base64码
      * @param netImagePath
      * @return
      */
-    private static String NetImageToBase64(String netImagePath) {
+    private static String netImageToBase64(String netImagePath) {
 
 //        netImagePath = "http://res.microsoul.com/" + netImagePath;//测试环境
         //netImagePath = "http://image.aipaas.com" + netImagePath;//正式环境
@@ -46,7 +49,7 @@ public class ImageToBase64 {
 
     public static void main(String[] args) {
 
-        String base64 = NetImageToBase64("http://chuantu.xyz/t6/702/1565918522x3752237043.jpg");
+        String base64 = netImageToBase64("http://chuantu.xyz/t6/702/1565918522x3752237043.jpg");
 
         System.out.println(base64);
     }

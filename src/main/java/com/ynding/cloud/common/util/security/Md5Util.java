@@ -1,12 +1,16 @@
-package com.ynding.cloud.common.util;
+package com.ynding.cloud.common.util.security;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+/**
+ * @author ynding
+ * @version 2020/08/29
+ */
 public class Md5Util {
 
-    public static String stringToMD5(String plainText) {
+    public static String stringToMd5(String plainText) {
         byte[] secretBytes = null;
         try {
             secretBytes = MessageDigest.getInstance("md5").digest(
@@ -15,10 +19,14 @@ public class Md5Util {
             throw new RuntimeException("没有这个md5算法！");
         }
         String md5code = new BigInteger(1, secretBytes).toString(16);
-        for (int i = 0; i < 32 - md5code.length(); i++) {
-            md5code = "0" + md5code;
+        int len = 32;
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (int i = 0; i < len - md5code.length(); i++) {
+            stringBuilder.append("0");
         }
-        return md5code;
+        stringBuilder.append(md5code);
+        return stringBuilder.toString();
     }
 
     public final static String md5(String content) {
@@ -42,10 +50,13 @@ public class Md5Util {
             int j = md.length;
             char[] str = new char[j * 2];
             int k = 0;
-            for (int i = 0; i < j; i++) {   //  i = 0
-                byte byte0 = md[i];  //95
-                str[k++] = md5String[byte0 >>> 4 & 0xf];    //    5
-                str[k++] = md5String[byte0 & 0xf];   //   F
+            for (int i = 0; i < j; i++) {
+                //95
+                byte byte0 = md[i];
+                // 5
+                str[k++] = md5String[byte0 >>> 4 & 0xf];
+                // F
+                str[k++] = md5String[byte0 & 0xf];
             }
 
             //返回经过加密后的字符串
@@ -58,6 +69,6 @@ public class Md5Util {
 
     public static void main(String[] args) {
         System.out.println(md5("ynding"));
-        System.out.println(stringToMD5("ynding"));
+        System.out.println(stringToMd5("ynding"));
     }
 }

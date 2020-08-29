@@ -9,16 +9,20 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+/**
+ * @author ynding
+ * @version 2020/08/29
+ */
 @Slf4j
 public class PropertiesUtil {
 
     private static Properties props;
 
-    static{
+    static {
         loadProps();
     }
 
-    synchronized static private void loadProps(){
+    synchronized static private void loadProps() {
         log.info("开始加载yml文件内容.......");
         props = new Properties();
         InputStream in = null;
@@ -32,7 +36,7 @@ public class PropertiesUtil {
             log.error("出现IOException");
         } finally {
             try {
-                if(null != in) {
+                if (null != in) {
                     in.close();
                 }
             } catch (IOException e) {
@@ -43,15 +47,15 @@ public class PropertiesUtil {
         log.info("yml文件内容：" + props);
     }
 
-    public static String getProperty(String key){
-        if(null == props) {
+    public static String getProperty(String key) {
+        if (null == props) {
             loadProps();
         }
         return props.getProperty(key);
     }
 
     public static String getProperty(String key, String defaultValue) {
-        if(null == props) {
+        if (null == props) {
             loadProps();
         }
         return props.getProperty(key, defaultValue);
@@ -59,19 +63,22 @@ public class PropertiesUtil {
 
     /**
      * 将json格式的字符串转换成对应的对象
+     *
      * @param propertyKey
      * @return
      */
-    public static String[][] getPropertyVal(String propertyKey){
+    public static String[][] getPropertyVal(String propertyKey) {
 
         String appGroups = getProperty(propertyKey);
 
         Gson gson = new Gson();
 
-        String[][] appGroup =  gson.fromJson(appGroups,new TypeToken<String[][]>(){}.getType());
-        //String[][] appGroup =  gson.fromJson(appGroups,String[][].class);
+        String[][] appGroup = gson.fromJson(appGroups, new TypeToken<String[][]>() {
+        }.getType());
 
-       return  appGroup;
+        String[][] appGroup2 =  gson.fromJson(appGroups,String[][].class);
+
+        return appGroup;
     }
 
 
